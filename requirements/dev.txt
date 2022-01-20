@@ -1,0 +1,15 @@
+# Specifies only dev-specific requirements
+# But imports the production ones (from prod.txt) too
+-r prod.txt
+
+# dev dependencies
+virtualenv
+
+# formatting
+isort           # MIT License (MIT)
+black           # MIT License (MIT)
+autoflake       # MIT Licence (MIT)
+
+# linting
+pylint==2.7.4   # GNU General Public License (GPL) (GPL-2.0-or-later)
+darglint        # MIT License (MIT)

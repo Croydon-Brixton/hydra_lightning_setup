@@ -1,0 +1,14 @@
+# Production requirements - the absolute minimum to be able to run the code
+# external requirements
+numpy
+
+# deep learning
+torch
+pytorch-lightning
+
+# experimental logging
+wandb
+
+# configuration
+hydra-core
+omegaconf

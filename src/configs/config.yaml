@@ -1,0 +1,47 @@
+###################################################################################################
+# 1 Model hyperparams
+
+# TODO add your model hyperparameters here
+
+
+# Provide path to a checkpoint model to continue training or null to
+# start from scratch
+load_from_checkpoint: null  # null to start from scratch
+
+###################################################################################################
+# 2 Dataset hyperparams
+
+# TODO add augomentation, normalisation and split/fold parameters here
+
+###################################################################################################
+# 3 Training hyperparams
+
+# TODO add training parameters here (some samples provided)
+epochs: 10
+batch_size: 1
+learning_rate: 3e-3
+
+loss: dummy
+eval_metrics: wohoo
+
+checkpoint_freq: 1 # How many epochs we should train for before checkpointing the model.
+save_top_k: 2  # The top k checkpoints with the lowest validation loss will be saved
+
+# If val_interval is a float, it is the proportion of training set between validation epochs.
+# If it is an int, it denotes the number of batches in between validation epochs.
+val_interval: 1.0
+log_steps: 1 # How many gradient updates between each log point.
+parallel_engine: ddp
+cuda: False # Whether to use GPUs.
+gpus: 0 # Number of GPUs to use.
+num_workers: 1 # Number of subprocesses to use for data loading.
+seed: 5721 # Random seed.
+run_name: ??? # Mandatory string argument that describes the run.
+
+###################################################################################################
+# 4 Hydra config overrides:
+hydra:
+  run:
+    dir: logs/${run_name}
+  sweep:
+    dir: logs/${run_name}
