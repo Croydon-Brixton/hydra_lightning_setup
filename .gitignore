@@ -88,3 +88,7 @@ io/
 
 # Mypy cache
 .mypy_cache/
+
+# Other
+.history
+.history/
