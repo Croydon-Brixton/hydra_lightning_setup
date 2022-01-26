@@ -102,7 +102,9 @@ class SampleModel(pl.LightningModule):
         return y, y_hat
 
     def on_validation_epoch_start(self) -> None:
-        self.model.train()
+        logger.info("Validation epoch started")
+        # You can modify steps to be done at valid epoch starte here.
+        # For example if your dataset has a switch, etc.
 
     def validation_epoch_end(self, outputs: List) -> None:
         y_list, y_pred_list = [], []
@@ -122,7 +124,9 @@ class SampleModel(pl.LightningModule):
         return self.validation_step(batch, batch_idx)
 
     def on_test_epoch_start(self):
-        self.model.train()
+        logger.info("Test epoch started")
+        # You can modify steps to be done at test epoch starte here.
+        # For example if your dataset has a switch, etc.
 
     def test_epoch_end(self, outputs: List) -> None:
         y_list, y_pred_list = [], []
