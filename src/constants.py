@@ -7,11 +7,15 @@ constants_path = Path(__file__)
 SRC_PATH = constants_path.parent
 PROJECT_PATH = SRC_PATH.parent
 
-#  Data path
-IO_PATH = Path("/io")
-DATA_PATH = Path("/io/data")
+# Data path
+#  set your data paths ehre
+DATA_PATH = Path("data")
 RAW_PATH = DATA_PATH / "raw"
 INTERIM_PATH = DATA_PATH / "interim"
+
+# Config path
+HYDRA_CONFIG_PATH = SRC_PATH / "configs"
+HYDRA_CONFIG_NAME = "config"
 
 # ---------------- LOGGING CONSTANTS ----------------
 DEFAULT_FORMATTER = logging.Formatter(
