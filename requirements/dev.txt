@@ -9,7 +9,7 @@ black[jupyter]
 autoflake       # MIT Licence (MIT)
 
 # linting
-pylint==2.7.4   # GNU General Public License (GPL) (GPL-2.0-or-later)
+pylint==2.14.5  # GNU General Public License (GPL) (GPL-2.0-or-later)
 darglint        # MIT License (MIT)
 
 # Interactive compute
