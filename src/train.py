@@ -9,7 +9,7 @@ from pytorch_lightning.loggers import WandbLogger
 from src import constants
 from src.configs import config
 from src.models.sample_model import SampleModel  # TODO
-from src.utils.logging import get_logger
+from src.utils.logutils import get_logger
 
 logger = get_logger(__name__)
 
@@ -80,7 +80,7 @@ def train_model(cfg):
 
 # Load hydra config from yaml filses and command line arguments.
 @hydra.main(
-    config_path=constants.HYDRA_CONFIG_PATH, config_name=constants.HYDRA_CONFIG_NAME
+    config_path=constants.CONFIG_PATH, config_name="default", version_base=constants.HYDRA_VERSION_BASE
 )
 def main(cfg: DictConfig) -> None:
     """Load and validate the hydra config."""
