@@ -92,3 +92,8 @@ io/
 # Other
 .history
 .history/
+logs/
+venv*/
+venv_gpu/
+lightning_logs
+.DS_Store
