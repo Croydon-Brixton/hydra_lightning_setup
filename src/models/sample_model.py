@@ -59,9 +59,7 @@ class SampleModel(pl.LightningModule):
 
     # --- Configuring the model
     def configure_optimizers(self):
-        logger.info(
-            "Configuring optimizer with learning rate %s", self.config.learning_rate
-        )
+        logger.info("Configuring optimizer with learning rate %s", self.config.learning_rate)
         opt = torch.optim.Adam(params=self.parameters(), lr=self.config.learning_rate)
         return opt
 

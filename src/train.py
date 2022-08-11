@@ -80,7 +80,9 @@ def train_model(cfg):
 
 # Load hydra config from yaml filses and command line arguments.
 @hydra.main(
-    config_path=constants.CONFIG_PATH, config_name="default", version_base=constants.HYDRA_VERSION_BASE
+    config_path=constants.CONFIG_PATH,
+    config_name="default",
+    version_base=constants.HYDRA_VERSION_BASE,
 )
 def main(cfg: DictConfig) -> None:
     """Load and validate the hydra config."""
