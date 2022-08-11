@@ -2,14 +2,22 @@
 # But imports the production ones (from prod.txt) too
 -r prod.txt
 
-# dev dependencies
-virtualenv
-
 # formatting
 isort           # MIT License (MIT)
 black           # MIT License (MIT)
+black[jupyter]
 autoflake       # MIT Licence (MIT)
 
 # linting
 pylint==2.7.4   # GNU General Public License (GPL) (GPL-2.0-or-later)
 darglint        # MIT License (MIT)
+
+# Interactive compute
+ipykernel
+icecream
+
+# Experiment tracking
+wandb
+
+# Local package
+-e ..

@@ -1,14 +1,22 @@
 # Production requirements - the absolute minimum to be able to run the code
-# external requirements
-numpy
 
-# deep learning
-torch
-pytorch-lightning
+# Software engineering tools
+hydra-core          # for configs
+omegaconf           # for configs
+python-dotenv       # for .env files
+tqdm                # progress bars
 
-# experimental logging
-wandb
+# Standard ML tools
+pandas              # dataframe tools
+matplotlib          # plotting tools
+seaborn             # plotting tools
+scikit-learn        # standard ML algorithms
+pytorch-lightning   # lightning model training tools
+wandb               # experiment tracking
 
-# configuration
-hydra-core
-omegaconf
+# Bio tools
+biopython           # general bio tools
+
+# Other
+#fair-esm            # for ESM embeddings
+#tape-proteins       # for UniRep embeddings

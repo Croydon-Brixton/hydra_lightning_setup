@@ -5,7 +5,22 @@
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-SHARED_IO = /io
+
+# can be 'cpu', 'gpu' or 'm1'
+sys := "cpu"
+name := "venv"
+
+ifeq (,$(shell which conda))
+HAS_CONDA=False
+else
+HAS_CONDA=True
+endif
+
+ifeq (,$(shell which mamba))
+HAS_MAMBA=False
+else
+HAS_MAMBA=True
+endif
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -19,19 +34,37 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-# Set up Python environment
-env:
-ifndef VIRTUAL_ENV
-	python3 -m venv env
+# Set up Python environment (requires `sys` variable to be set)
+venv:
+ifeq (True, $(HAS_MAMBA))
+	@echo ">>> Detected mamba, creating conda environment via mamba."
+	
+	# Create the conda environment
+	mamba env create --prefix=./$(name) -f requirements/env_$(sys).yml
+
+	@echo ">>> New mamba env created. Activate from project directory with:\nconda activate ./$(name)"
+else ifeq (True,$(HAS_CONDA))
+	@echo ">>> Detected conda, creating conda environment."
+	
+	# Create the conda environment
+	conda env create --prefix=./$(name) -f requirements/env_$(sys).yml
+
+	@echo ">>> New conda env created. Activate from project directory with:\nconda activate ./$(name)"
 else
-	@echo "You are already in a virtual environment."
+	@echo ">>> No conda detected. Please install conda or manually install requirements in your preferred python version."
 endif
+
+# Update dependencies
+update_dep:
+	cd ./requirements; \
+	pip install -r prod.txt; \
+	pip install -r dev.txt; \
 
 # Format src directory using black
 format:
-	isort --virtual-env env src
+	isort .
 	autoflake -r --in-place --remove-unused-variables src
-	black src
+	black --config=pyproject.toml .
 
 # Lint using pylint
 lint:
@@ -42,44 +75,9 @@ else
 endif
 
 # Set up pre-commit hooks
-precommit:
+configure_precommit:
 	pip install pre-commit black pylint isort
 	pre-commit install
-
-# Install Python dependencies
-prod_requirements:
-ifdef VIRTUAL_ENV
-	python3 -m pip install -U pip setuptools wheel
-	python3 -m pip install -r requirements/prod.txt
-	python3 -m pip install -e .
-else
-	@echo "Please create your virtual environment and activate it first (make env; source env/bin/activate)."
-endif
-
-requirements:
-ifdef VIRTUAL_ENV
-	python3 -m pip install -U pip setuptools wheel
-	python3 -m pip install -r requirements/dev.txt
-	python3 -m pip install -e .
-else
-	@echo "Please create your virtual environment and activate it first (make env; source env/bin/activate)."
-endif
-
-# Create a symlink from the shared folder to ./io/
-symlink:
-	@/bin/sh -c "if [ ! -d ./io ]; then \
-			ln -s ${SHARED_IO} .; \
-		fi"
-
-# Sync data from Google Bucket
-sync_raw_data:
-	#TODO: aws s3 sync s3://$(BUCKET)/data/ /io/data/raw
-
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
-
 
 #################################################################################
 # Self Documenting Commands                                                     #

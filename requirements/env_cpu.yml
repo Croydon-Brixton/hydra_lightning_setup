@@ -1,0 +1,14 @@
+prefix: ./venv
+channels:
+  - pytorch
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch::pytorch
+  - pytorch::cpuonly
+  - pip
+  - pip:
+      - -r prod.txt
+      - -r dev.txt
