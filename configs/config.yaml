@@ -1,6 +1,8 @@
 ###################################################################################################
 # 1 Model hyperparams
 
+name:
+
 # TODO add your model hyperparameters here
 
 
@@ -36,7 +38,7 @@ cuda: False # Whether to use GPUs.
 gpus: 0 # Number of GPUs to use.
 num_workers: 1 # Number of subprocesses to use for data loading.
 seed: 5721 # Random seed.
-run_name: ??? # Mandatory string argument that describes the run.
+test: True
 
 ###################################################################################################
 # 4 Hydra config overrides:
@@ -45,3 +47,9 @@ hydra:
     dir: logs/${run_name}
   sweep:
     dir: logs/${run_name}
+
+
+defaults:
+ logger: wandb
+ dataset: sample_dataset
+ model: sample_model
