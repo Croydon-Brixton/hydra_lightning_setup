@@ -10,7 +10,7 @@ def get_callbacks(cfg):
     
     callacks = []
 
-    if 'checkpointing' in cfg:
+    if 'checkpointing' in cfg.callbacks:
         ckpt_dir.mkdir(exist_ok=True)
         # Saves the top k checkpoints according to the test metric throughout
         # training.

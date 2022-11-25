@@ -20,7 +20,7 @@ logger = get_logger(__name__)
 @hydra.main(config_path=constants.CONFIG_PATH,
             config_name="default",
             version_base=constants.HYDRA_VERSION_BASE)
-def train(config DictConfig):
+def train(config: DictConfig):
     """Train model with PyTorch Lightning and log with Wandb."""
     # Set random seeds
     seed_everything(config.seed)

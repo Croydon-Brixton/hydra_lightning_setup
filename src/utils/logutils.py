@@ -68,13 +68,9 @@ def get_lightning_logger(cfg):
     
     # Setup logging
     if cfg.logger.name == "wandb":
-        run_dir = constants.IO_PATH / "models" / str(cfg.name)
-        run_dir.mkdir(parents=True, exist_ok=True)
-        # Force all runs to log to the specified project and allow anonymous
-        # logging without a wandb account.
         logger = WandbLogger(
             name=cfg.name,
-            save_dir=run_dir,
+            save_dir=cfg.hydra.run.dir,
             entity="enter_entity_name",
             project="enter_project_name",
             save_code=False,
