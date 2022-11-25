@@ -16,58 +16,52 @@ from src.data.datamodule import get_datamodule
 
 logger = get_logger(__name__)
 
-
-def train_model(cfg):
+# Load hydra config from yaml filses and command line arguments.
+@hydra.main(config_path=constants.CONFIG_PATH,
+            config_name="default",
+            version_base=constants.HYDRA_VERSION_BASE)
+def train(config DictConfig):
     """Train model with PyTorch Lightning and log with Wandb."""
     # Set random seeds
-    seed_everything(cfg.seed)
+    seed_everything(config.seed)
+    config = config.validate_config(config)
+
 
     # Get the model and datasets 
-    model = get_lightning_model(cfg)
-    datamodule = get_datamodule(cfg)
+    model = get_lightning_model(config)
+    datamodule = get_datamodule(config)
 
     # Setup logging and checkpointing
-    pl_logger = get_lightning_logger(cfg)
-    callbacks = get_callbacks(cfg)
+    pl_logger = get_lightning_logger(config)
+    callbacks = get_callbacks(config)
 
     # Instantiate Trainer
     trainer = Trainer(
-        accelerator=cfg.parallel_engine,
-        auto_select_gpus=cfg.cuda,
-        gpus=cfg.gpus,
+        accelerator=config.parallel_engine,
+        auto_select_gpus=config.cuda,
+        gpus=config.gpus,
         benchmark=True,
         deterministic=True,
         callbacks=callbacks,
         prepare_data_per_node=False,
-        max_epochs=cfg.epochs,
+        max_epochs=config.epochs,
         logger=pl_logger,
-        log_every_n_steps=cfg.log_steps,
-        val_check_interval=cfg.val_interval,
+        log_every_n_steps=config.log_steps,
+        val_check_interval=config.val_interval,
     )
 
     # Train model
     trainer.fit(model)
 
     # Test the model at the best checkoint:
-    if cfg.test:
+    # TODO Implement
+    if config.test:
         logger.info("Testing the model at checkpoint %s", ckpt.best_model_path)
         model = SampleModel.load_from_checkpoint(ckpt.best_model_path)
         trainer.test(model)
         logger.info("Train loop completed. Exiting.")
 
 
-# Load hydra config from yaml filses and command line arguments.
-@hydra.main(
-    config_path=constants.CONFIG_PATH,
-    config_name="default",
-    version_base=constants.HYDRA_VERSION_BASE,
-)
-def main(cfg: DictConfig) -> None:
-    """Load and validate the hydra config."""
-    cfg = config.validate_config(cfg)
-    train_model(cfg)
-
-
 if __name__ == "__main__":
     # pylint: disable=no-value-for-parameter
-    main()
+    train()
