@@ -1,0 +1,3 @@
+project: 'PROJECT NAME'
+entity: {env.WANDB_ENTITY}
+save_dir: 'save_dir'
