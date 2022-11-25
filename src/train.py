@@ -9,7 +9,7 @@ from pytorch_lightning.loggers import WandbLogger
 from src import constants
 from src.configs import config
 from src.models.sample_model import SampleModel# TODO
-from src.models.utils import get_model
+from src.models.utils import get_lightning_model
 from src.utils.logutils import get_logger, get_lightning_logger
 from src.utils.callbacks import get_callbacks
 from src.data.datamodule import get_datamodule
@@ -23,7 +23,7 @@ def train_model(cfg):
     seed_everything(cfg.seed)
 
     # Get the model and datasets 
-    model = get_model(cfg)
+    model = get_lightning_model(cfg)
     datamodule = get_datamodule(cfg)
 
     # Setup logging and checkpointing

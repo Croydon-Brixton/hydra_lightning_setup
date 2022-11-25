@@ -4,7 +4,7 @@ from src.utils.logutils import get_logger
 logger = get_logger(__name__)
 
 
-def get_model(cfg):
+def get_lightning_model(cfg):
     """Models a Lightning Model giving a config object
 
     Args:
@@ -18,5 +18,19 @@ def get_model(cfg):
     else:
         logger.info("Initialising new model")
         model = SampleModel(cfg)  # TODO
+        
+    return model
+
+def get_model(cfg):
+    """Models a PyTorch model giving a config object
+
+    Args:
+        cfg (config): Whole experiment config
+    """
+
+    model_cfg = cfg.model
+    
+    if model_cfg.name == "egnn":
+        model = EGNN(**model_cfg)
         
     return model

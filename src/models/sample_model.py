@@ -7,6 +7,7 @@ from omegaconf import DictConfig
 from torch.utils.data import DataLoader, Dataset
 
 from src.utils.logutils import get_logger
+from src.models.utils import get_model
 
 logger = get_logger(__file__)
 
@@ -54,7 +55,11 @@ class SampleModel(pl.LightningModule):
         super().__init__()
         self.save_hyperparameters(config)
         self.config = config
-        self.model: torch.nn.Module = get_sample_model(config)
+        
+        # Define the model
+        self.model: torch.nn.Module = get_model(config)
+        
+        # Define the loss
         self.loss = self.configure_loss(config.loss)
 
     # --- Configuring the model
