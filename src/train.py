@@ -1,13 +1,9 @@
 """Main module to load and train the model. This should be the program entry point."""
-
 import hydra
 from omegaconf import DictConfig
 from pytorch_lightning import Trainer, seed_everything
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import WandbLogger
 
 from src import constants
-from src.configs import config
 from src.models.sample_model import SampleModel# TODO
 from src.models.utils import get_lightning_model
 from src.utils.logutils import get_logger, get_lightning_logger
@@ -22,6 +18,7 @@ logger = get_logger(__name__)
             version_base=constants.HYDRA_VERSION_BASE)
 def train(config: DictConfig):
     """Train model with PyTorch Lightning and log with Wandb."""
+    
     # Set random seeds
     seed_everything(config.seed)
     config = config.validate_config(config)
@@ -51,7 +48,7 @@ def train(config: DictConfig):
     )
 
     # Train model
-    trainer.fit(model)
+    trainer.fit(model, datamodule)
 
     # Test the model at the best checkoint:
     # TODO Implement

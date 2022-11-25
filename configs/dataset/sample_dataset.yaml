@@ -1,2 +1,2 @@
-data_dir: {env.DATA_DIR}
+data_dir: {oc.env:DATA_DIR}
 num_workers: 1 # Number of subprocesses to use for data loading.
