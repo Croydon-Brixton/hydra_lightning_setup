@@ -1,4 +1,4 @@
-name:
+name: test
 load_from_checkpoint: null  # null to start from scratch
 device: 
 seed: 5721 # Random seed.
