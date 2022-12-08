@@ -4,7 +4,7 @@ from omegaconf import DictConfig
 from pytorch_lightning import Trainer, seed_everything
 
 from src import constants
-from src.models.sample_model import SampleModel# TODO
+from src.models.sample_model import SampleModel
 from src.models.utils import get_lightning_model
 from src.utils.logutils import get_logger, get_lightning_logger
 from src.utils.callbacks import get_callbacks
