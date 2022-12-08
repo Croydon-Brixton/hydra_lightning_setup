@@ -59,3 +59,23 @@ def get_logger(
     logger.propagate = propagate
 
     return logger
+
+
+def get_lightning_logger(cfg):
+    
+    if cfg.name == 'test': # Returns no logger if a test/debugging
+        return None
+    
+    # Setup logging
+    if cfg.logger.name == "wandb":
+        logger = WandbLogger(
+            name=cfg.name,
+            save_dir=cfg.hydra.run.dir,
+            entity="enter_entity_name",
+            project="enter_project_name",
+            save_code=False,
+        )
+    else:
+        raise NotImplementedError("Logger not implemented yet")
+    
+    return logger
