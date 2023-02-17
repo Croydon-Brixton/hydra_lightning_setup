@@ -97,4 +97,3 @@ venv*/
 venv_gpu/
 lightning_logs
 .DS_Store
-bio.py

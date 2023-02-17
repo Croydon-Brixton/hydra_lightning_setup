@@ -1,3 +1,0 @@
-project: 'PROJECT NAME'
-entity: ${oc.env:WANDB_ENTITY}
-save_dir: {hydra.run.dir}

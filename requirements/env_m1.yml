@@ -3,11 +3,19 @@ channels:
   - pytorch
   - bioconda
   - conda-forge
+  - pyg
   - defaults
 dependencies:
-  - python=3.10
-  - pytorch-nightly::pytorch
+  - python=3.9
+  - pytorch::pytorch
+  - pytorch::cpuonly
+  - pyg::pyg
   - pip
+  - pytables  # Annoying to install otherwise on M1
   - pip:
+      - git+https://github.com/pyg-team/pyg-lib.git
+      - torch-scatter
+      - torch-sparse
+      - torch-geometric
       - -r prod.txt
       - -r dev.txt

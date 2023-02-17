@@ -26,15 +26,19 @@ endif
 # COMMANDS                                                                      #
 #################################################################################
 
-# Initialize project (requirements + io/ folder)
+## Initialize project (requirements + io/ folder)
 init: requirements symlink precommit
 
-# Delete all compiled Python files
+## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-# Set up Python environment (requires `sys` variable to be set)
+## Clear output cells of all notebooks
+clear_notebooks:
+	python3 -m nbconvert --ClearOutputPreprocessor.enabled=True --inplace *.ipynb **/*.ipynb
+
+## Set up Python environment (requires `sys` variable to be set)
 venv:
 ifeq (True, $(HAS_MAMBA))
 	@echo ">>> Detected mamba, creating conda environment via mamba."
@@ -54,19 +58,19 @@ else
 	@echo ">>> No conda detected. Please install conda or manually install requirements in your preferred python version."
 endif
 
-# Update dependencies
+## Update dependencies
 update_dep:
 	cd ./requirements; \
 	pip install -r prod.txt; \
 	pip install -r dev.txt; \
 
-# Format src directory using black
+## Format src directory using black
 format:
-	isort .
-	autoflake -r --in-place --remove-unused-variables src
-	black --config=pyproject.toml .
+	isort src notebooks
+	autoflake -r --in-place --remove-unused-variables --remove-all-unused-imports --ignore-init-module-imports src notebooks
+	black --config=pyproject.toml src notebooks
 
-# Lint using pylint
+## Lint using pylint
 lint:
 ifdef VIRTUAL_ENV
 	pylint src
@@ -74,7 +78,7 @@ else
 	@echo "Please create your virtual environment and activate it first (make env; source env/bin/activate)."
 endif
 
-# Set up pre-commit hooks
+## Set up pre-commit hooks
 configure_precommit:
 	pip install pre-commit black pylint isort
 	pre-commit install

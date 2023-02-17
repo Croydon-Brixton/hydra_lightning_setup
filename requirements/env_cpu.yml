@@ -3,11 +3,13 @@ channels:
   - pytorch
   - bioconda
   - conda-forge
+  - pyg
   - defaults
 dependencies:
   - python=3.10
   - pytorch::pytorch
   - pytorch::cpuonly
+  - pyg::pyg
   - pip
   - pip:
       - -r prod.txt

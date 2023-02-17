@@ -1,13 +1,17 @@
 prefix: ./venv
 channels:
+  - nvidia
   - pytorch
   - bioconda
+  - pyg
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10
+  - python=3.9
+  - pytorch-cuda=11.7
   - pytorch::pytorch
   - conda-forge::cudatoolkit=11.6
+  - pyg::pyg
   - pip
   - pip:
       - -r prod.txt

@@ -11,7 +11,9 @@ from src.utils.logutils import get_logger
 
 dotenv.load_dotenv(override=True)
 try:
-    from icecream import ic
+    from icecream import ic  # noqa
+    import lovely_tensors as lt
+    lt.monkey_patch()
 except:
     pass
 

@@ -1,6 +1,7 @@
 # Place all your constants here
 import logging
 import pathlib
+import os
 
 import psutil
 from dotenv import load_dotenv
@@ -13,6 +14,7 @@ load_dotenv(override=True)
 SRC_PATH = pathlib.Path(__file__).parent
 PROJECT_PATH = SRC_PATH.parent
 CONFIG_PATH = PROJECT_PATH / "configs"
+DATA_PATH = pathlib.Path(os.getenv("DATA_PATH", PROJECT_PATH / "data"))
 HYDRA_VERSION_BASE = "1.2"
 
 # ---------------- LOGGING CONSTANTS ----------------
